@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Web Developer Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCombo", "src\NCombo.csproj", "{9B2575BF-935A-4E8D-AF9E-FF14C1058372}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NComboExample", "example\NComboExample.csproj", "{36252A8A-9CC8-41E0-A8A2-D95449877360}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NComboTest", "test\NComboTest.csproj", "{5742D5B5-89E6-4850-AD32-0F7EB683622F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{9B2575BF-935A-4E8D-AF9E-FF14C1058372}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B2575BF-935A-4E8D-AF9E-FF14C1058372}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B2575BF-935A-4E8D-AF9E-FF14C1058372}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36252A8A-9CC8-41E0-A8A2-D95449877360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36252A8A-9CC8-41E0-A8A2-D95449877360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36252A8A-9CC8-41E0-A8A2-D95449877360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36252A8A-9CC8-41E0-A8A2-D95449877360}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5742D5B5-89E6-4850-AD32-0F7EB683622F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5742D5B5-89E6-4850-AD32-0F7EB683622F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5742D5B5-89E6-4850-AD32-0F7EB683622F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5742D5B5-89E6-4850-AD32-0F7EB683622F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
