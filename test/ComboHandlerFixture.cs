@@ -9,6 +9,14 @@ namespace NComboTest
     [TestFixture]
     public class ComboHandlerFixture
     {
+        [SetUp]
+        public void Setup()
+        {
+            NCombo.ComboHandler ch = new NCombo.ComboHandler();
+
+
+        }
+
         [Test]
         public void Test1()
         {

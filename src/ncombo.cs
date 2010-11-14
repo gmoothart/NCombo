@@ -4,38 +4,32 @@ using System.Web;
 
 namespace NCombo
 {
-    public class ComboHandler : IHttpHandler
+    public class ComboHandler : BaseHttpHandler
     {
-        /// <summary>
-        /// You will need to configure this handler in the web.config file of your 
-        /// web and register it with IIS before being able to use it. For more information
-        /// see the following link: http://go.microsoft.com/?linkid=8101007
-        /// </summary>
-        #region IHttpHandler Members
 
-        public bool IsReusable
+        public override void HandleRequest(HttpContextBase context)
         {
-            // Return false in case your Managed Handler cannot be reused for another request.
-            // Usually this would be false in case you have some state information preserved per request.
-            get { return true; }
+            
         }
 
-        public void ProcessRequest(HttpContext context)
-        {
-            //
-            // possible sources:
-            //   yui3
-            //   yui2in3
-            //   yui gallery
-            //   app javascript
-            //
-            string q = context.Request.Url.Query.Substring(1);
-            var modules = q.Split('&');
-                          
 
-            //write your handler implementation here.
+        public override bool ValidateParameters(HttpContextBase context)
+        {
+            // TODO: validation on query string
+            return true;
         }
 
-        #endregion
+        public override bool RequiresAuthentication
+        {
+            get { return false; }
+        }
+
+        public override string ContentMimeType
+        {
+            get {
+                // TODO: may want to combo-load css or other resource types in the future
+                return "application/javascript";
+            }
+        }
     }
 }
