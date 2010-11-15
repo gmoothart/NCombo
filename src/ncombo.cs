@@ -18,6 +18,7 @@ namespace NCombo
                 from path in q.Split('&')
                 select context.Server.MapPath(yuiDir + path);
 
+            // TODO: cache
             // copy individual file streams to the output
             foreach (string p in paths) {
                 if (!File.Exists(p)) {
@@ -25,8 +26,10 @@ namespace NCombo
                 }
                 using (FileStream fs = File.OpenRead(p)) {
                     context.Response.WriteFile(p);
+                    context.Response.Write('\n');
                 }
             }
+
         }
 
         public override bool ValidateParameters(HttpContextBase context)
@@ -38,7 +41,7 @@ namespace NCombo
         public override void SetResponseCachePolicy(HttpCachePolicyBase cache)
         {
             cache.SetCacheability(HttpCacheability.Public);
-            cache.SetExpires(DateTime.MaxValue);
+            cache.SetExpires(DateTime.Now.AddYears(10));
         }
 
         public override bool RequiresAuthentication
@@ -50,7 +53,7 @@ namespace NCombo
         {
             get {
                 // TODO: may want to combo-load css or other resource types in the future
-                return "application/javascript";
+                return "application/x-javascript";
             }
         }
 

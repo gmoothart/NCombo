@@ -36,5 +36,19 @@
             </div>
         </div>
     </div>
+    <script type="application/javascript" src="<%= Url.Content("~/yui/3.2.0/build/yui/yui.js") %>"></script>
+    <script type="application/javascript">
+        YUI_config = {
+            comboBase: '<%= Url.Content("~/ncombo.axd") %>?',
+            combine: true
+
+        };
+
+        YUI().use('node', 'event', 'scrollview', function (Y) {
+            Y.one('.main h2').setContent('Welcome to YUI 3!');
+
+            alert('yui using!');
+        });
+    </script>
 </body>
 </html>
