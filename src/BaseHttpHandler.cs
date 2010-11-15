@@ -66,9 +66,7 @@ namespace NCombo
                 RespondForbidden(ctx);
                 return;
             }
-
-            context.Response.ContentType = ContentMimeType;
-
+            
             HandleRequest(ctx);
         }
 
@@ -83,10 +81,7 @@ namespace NCombo
         /// </remarks>
         public bool IsReusable
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         /// <summary>
@@ -138,12 +133,6 @@ namespace NCombo
         ///    otherwise, <c>false</c>.
         /// </value>
         public abstract bool RequiresAuthentication { get; }
-
-        /// <summary>
-        /// Gets the content MIME type.
-        /// </summary>
-        /// <value></value>
-        public abstract string ContentMimeType { get; }
 
         /// <summary>
         /// Sets the cache policy.  Unless a handler overrides

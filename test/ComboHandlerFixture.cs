@@ -100,21 +100,25 @@ namespace NComboTest
         {
             mockRequest.Setup(m => m.Url)
                        .Returns(new Uri("http://app/ncombo.axd?file/test1.js&file/test2.js&"));
+            mockServer.Setup(m => m.MapPath("~/yui/file/test1.js"))
+                      .Returns(@"..\..\testScripts\test1.js");
 
             handle();
 
-            Assert.AreEqual("application/x-javascript", handler.ContentMimeType);
+            mockResponse.VerifySet(m => m.ContentType = "application/x-javascript");
         }
 
         [Test]
         public void Handler_ServesCSSAsProperMimeType()
         {
             mockRequest.Setup(m => m.Url)
-           .Returns(new Uri("http://app/ncombo.axd?file/test1.css&file/test2.css"));
+                       .Returns(new Uri("http://app/ncombo.axd?file/test1.css&file/test2.css"));
+            mockServer.Setup(m => m.MapPath("~/yui/file/test1.css"))
+                      .Returns(@"..\..\testScripts\test1.css");
 
             handle();
 
-            Assert.AreEqual("text/css", handler.ContentMimeType);
+            mockResponse.VerifySet(m => m.ContentType = "text/css");
         }
     }
 }

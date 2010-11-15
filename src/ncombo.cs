@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web;
 using System.IO;
+using System.Collections.Generic;
 
 namespace NCombo
 {
@@ -9,6 +10,12 @@ namespace NCombo
     {
         // TODO: make this configurable
         private string yuiDir = "~/yui/";
+
+        private Dictionary<string, string> extToMime = new Dictionary<string, string>
+        {
+            {".css", "text/css"},
+            {".js", "application/x-javascript"},
+        };
 
         public override void HandleRequest(HttpContextBase context)
         {
@@ -18,6 +25,14 @@ namespace NCombo
                 from path in q.Split('&')
                 where !string.IsNullOrEmpty(path)
                 select context.Server.MapPath(yuiDir + path);
+
+            //
+            // Set Mime Type
+            //
+            string ext = Path.GetExtension( paths.First() );
+            if (extToMime.ContainsKey(ext)) {
+                context.Response.ContentType = extToMime[ext];
+            }
 
             // TODO: cache
             // copy individual file streams to the output
@@ -48,14 +63,6 @@ namespace NCombo
         public override bool RequiresAuthentication
         {
             get { return false; }
-        }
-
-        public override string ContentMimeType
-        {
-            get {
-                // TODO: may want to combo-load css or other resource types in the future
-                return "application/x-javascript";
-            }
         }
     }
 }
