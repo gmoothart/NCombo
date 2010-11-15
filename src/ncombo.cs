@@ -56,20 +56,5 @@ namespace NCombo
                 return "application/x-javascript";
             }
         }
-
-        /// <summary>
-        /// Copies one stream to another.
-        /// </summary>
-        /// <remarks>
-        /// Courtesy of Mehrdad Afshari
-        /// http://stackoverflow.com/questions/444309/what-would-be-the-fastest-way-to-concatenate-three-files-in-c/444316#444316
-        /// </remarks>
-        private void CopyStream(Stream destination, Stream source) {
-            int count;
-           
-            byte[] buffer = new byte[1024];
-            while( (count = source.Read(buffer, 0, buffer.Length)) > 0)
-               destination.Write(buffer, 0, count);
-        }
     }
 }
