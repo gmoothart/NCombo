@@ -166,8 +166,7 @@ namespace NCombo
         /// <param name="context">Context.</param>
         protected void RespondFileNotFound(HttpContextBase context)
         {
-            context.Response.StatusCode
-                = (int)HttpStatusCode.NotFound;
+            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
             context.Response.End();
         }
 
