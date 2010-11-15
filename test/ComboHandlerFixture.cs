@@ -52,6 +52,20 @@ namespace NComboTest
             return (ex is ApplicationException && ex.Message == "all done here");
         }
 
+        private void handle()
+        {
+            try
+            {
+                handler.HandleRequest(mockContext.Object);
+            }
+            catch (ApplicationException ex)
+            {
+                // If this is a Response.End() exception, we can safely ignore.
+                // Otherwise, throw.
+                if (!isResponseEnd(ex)) throw;
+            }
+        }
+
         [Test]
         public void Handler_Throws404_IfAFileIsNotFound()
         {
@@ -59,16 +73,8 @@ namespace NComboTest
                        .Returns(new Uri("http://app/ncombo.axd?file/not/found.js"));
             mockServer.Setup(m => m.MapPath("~/yui/file/not/found.js"))
                       .Returns(@"..\..\testScripts\test0.js");
-            
-            try {
-                handler.HandleRequest(mockContext.Object);
-            }
-            catch (ApplicationException ex)
-            {
-                // If this is a Response.End() exception, we can safely ignore.
-                // Otherwise, thow.
-                if (!isResponseEnd(ex)) throw;
-            }
+
+            handle();
 
             mockResponse.VerifySet(m => m.StatusCode = 404);
         }
@@ -83,14 +89,7 @@ namespace NComboTest
             mockServer.Setup(m => m.MapPath("~/yui/file/test2.js"))
                       .Returns(@"..\..\testScripts\test2.js");
 
-            try
-            {
-                handler.HandleRequest(mockContext.Object);
-            }
-            catch (ApplicationException ex)
-            {
-                if (!isResponseEnd(ex)) throw;
-            }
+            handle();
 
             mockResponse.VerifySet((m => m.StatusCode = 404), Times.Never());
 
@@ -99,13 +98,23 @@ namespace NComboTest
         [Test]
         public void Handler_ServesJSAsProperMimeType()
         {
-            Assert.Fail();
+            mockRequest.Setup(m => m.Url)
+                       .Returns(new Uri("http://app/ncombo.axd?file/test1.js&file/test2.js&"));
+
+            handle();
+
+            Assert.AreEqual("application/x-javascript", handler.ContentMimeType);
         }
 
         [Test]
         public void Handler_ServesCSSAsProperMimeType()
         {
-            Assert.Fail();
+            mockRequest.Setup(m => m.Url)
+           .Returns(new Uri("http://app/ncombo.axd?file/test1.css&file/test2.css"));
+
+            handle();
+
+            Assert.AreEqual("text/css", handler.ContentMimeType);
         }
     }
 }
