@@ -35,7 +35,9 @@ namespace NComboTest
             //
             // Response.End() interupts execution in a server context. To 
             // simulate the same thing in our tests, we have it throw.
-            mockResponse.Setup(r => r.End()).Throws(new ApplicationException("all done here"));
+            //
+            mockResponse.Setup(r => r.End())
+                        .Throws(new ApplicationException("all done here"));
 
             mockServer = new Mock<HttpServerUtilityBase>();
 
@@ -45,14 +47,19 @@ namespace NComboTest
             mockContext.Setup(ctxt => ctxt.Server).Returns(mockServer.Object);
         }
 
+        private bool isResponseEnd(Exception ex)
+        {
+            return (ex is ApplicationException && ex.Message == "all done here");
+        }
+
         [Test]
         public void Handler_Throws404_IfAFileIsNotFound()
         {
             mockRequest.Setup(m => m.Url)
                        .Returns(new Uri("http://app/ncombo.axd?file/not/found.js"));
             mockServer.Setup(m => m.MapPath("~/yui/file/not/found.js"))
-                      .Returns(@"c:\foo\bar\baz.txt");
-
+                      .Returns(@"..\..\testScripts\test0.js");
+            
             try {
                 handler.HandleRequest(mockContext.Object);
             }
@@ -60,7 +67,7 @@ namespace NComboTest
             {
                 // If this is a Response.End() exception, we can safely ignore.
                 // Otherwise, thow.
-                if (ex.Message != "all done here") throw;
+                if (!isResponseEnd(ex)) throw;
             }
 
             mockResponse.VerifySet(m => m.StatusCode = 404);
@@ -69,14 +76,24 @@ namespace NComboTest
         [Test]
         public void Handler_DoesNotThrow404_ForATrailingAmpersand()
         {
-            Assert.Fail();
+            mockRequest.Setup(m => m.Url)
+                       .Returns(new Uri("http://app/ncombo.axd?file/test1.js&file/test2.js&"));
+            mockServer.Setup(m => m.MapPath("~/yui/file/test1.js"))
+                      .Returns(@"..\..\testScripts\test1.js");
+            mockServer.Setup(m => m.MapPath("~/yui/file/test2.js"))
+                      .Returns(@"..\..\testScripts\test2.js");
 
-        }
+            try
+            {
+                handler.HandleRequest(mockContext.Object);
+            }
+            catch (ApplicationException ex)
+            {
+                if (!isResponseEnd(ex)) throw;
+            }
 
-        [Test]
-        public void Handler_Returns200OnSuccess()
-        {
-            Assert.Fail();
+            mockResponse.VerifySet((m => m.StatusCode = 404), Times.Never());
+
         }
 
         [Test]

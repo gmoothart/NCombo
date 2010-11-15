@@ -16,6 +16,7 @@ namespace NCombo
 
             var paths =
                 from path in q.Split('&')
+                where !string.IsNullOrEmpty(path)
                 select context.Server.MapPath(yuiDir + path);
 
             // TODO: cache
