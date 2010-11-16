@@ -27,10 +27,10 @@ namespace NComboTest
 
             mockRequest = new Mock<HttpRequestBase>();
             mockRequest.Setup(r => r.Headers).Returns(new NameValueCollection());
+            mockRequest.Setup(r => r.ApplicationPath).Returns("/");
 
             mockResponse = new Mock<HttpResponseBase>();
-            mockResponse.Setup(r => r.WriteFile(It.IsAny<string>()));
-            mockResponse.Setup(r => r.Write('\n'));
+            mockResponse.Setup(r => r.Write(It.IsAny<string>()));
 
             //
             // Response.End() interupts execution in a server context. To 
@@ -71,7 +71,7 @@ namespace NComboTest
         {
             mockRequest.Setup(m => m.Url)
                        .Returns(new Uri("http://app/ncombo.axd?file/not/found.js"));
-            mockServer.Setup(m => m.MapPath("~/yui/file/not/found.js"))
+            mockServer.Setup(m => m.MapPath("/yui/file/not/found.js"))
                       .Returns(@"..\..\testScripts\test0.js");
 
             handle();
@@ -84,9 +84,9 @@ namespace NComboTest
         {
             mockRequest.Setup(m => m.Url)
                        .Returns(new Uri("http://app/ncombo.axd?file/test1.js&file/test2.js&"));
-            mockServer.Setup(m => m.MapPath("~/yui/file/test1.js"))
+            mockServer.Setup(m => m.MapPath("/yui/file/test1.js"))
                       .Returns(@"..\..\testScripts\test1.js");
-            mockServer.Setup(m => m.MapPath("~/yui/file/test2.js"))
+            mockServer.Setup(m => m.MapPath("/yui/file/test2.js"))
                       .Returns(@"..\..\testScripts\test2.js");
 
             handle();
@@ -100,7 +100,7 @@ namespace NComboTest
         {
             mockRequest.Setup(m => m.Url)
                        .Returns(new Uri("http://app/ncombo.axd?file/test1.js&file/test2.js&"));
-            mockServer.Setup(m => m.MapPath("~/yui/file/test1.js"))
+            mockServer.Setup(m => m.MapPath("/yui/file/test1.js"))
                       .Returns(@"..\..\testScripts\test1.js");
 
             handle();
@@ -113,7 +113,7 @@ namespace NComboTest
         {
             mockRequest.Setup(m => m.Url)
                        .Returns(new Uri("http://app/ncombo.axd?file/test1.css&file/test2.css"));
-            mockServer.Setup(m => m.MapPath("~/yui/file/test1.css"))
+            mockServer.Setup(m => m.MapPath("/yui/file/test1.css"))
                       .Returns(@"..\..\testScripts\test1.css");
 
             handle();

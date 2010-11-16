@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Scripts\comboTest.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1129,9 +1130,7 @@
     <Content Include="yui\3.2.0\build\yui\yui-throttle.js" />
     <Content Include="yui\3.2.0\build\yui\yui.js" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scripts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\src\NCombo.csproj">
       <Project>{9B2575BF-935A-4E8D-AF9E-FF14C1058372}</Project>
@@ -1155,8 +1154,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1362</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/NComboExample</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

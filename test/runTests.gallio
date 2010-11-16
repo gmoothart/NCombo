@@ -8,7 +8,10 @@
     <excludedFrameworkIds />
     <properties />
   </testPackage>
-  <testFilters />
+  <testFilters>
+    <testFilter filterName="LastRun" filterExpr="" />
+    <testFilter filterName="AutoSave" filterExpr="" />
+  </testFilters>
   <extensionSpecifications />
   <reportDirectory>..\..\..\Users\Gabe\AppData\Roaming\Gallio\Icarus\Reports</reportDirectory>
   <reportNameFormat>test-report-{0}-{1}</reportNameFormat>
