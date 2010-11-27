@@ -73,9 +73,9 @@ namespace NCombo
 
             // just filename or subdirs/filename (e.g) url(foo.png), url(foo/foo.png)
             resourceContent = Regex.Replace(resourceContent,
-                @"((url\()([^\.\.|^http]\S+)(\)))",
+                @"((url\()([^\.\.|^http|^data]\S+)(\)))",
                 resourceBase + "$3$4");
-              
+
             // slash filename (e.g.) url(/whatever)
             resourceContent = resourceContent.Replace("url(/", "url(" + resourceBase);
             
