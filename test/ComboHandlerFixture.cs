@@ -161,7 +161,25 @@ namespace NComboTest
         [Test]
         public void Handler_DoesNotTryToFixDataUris()
         {
-            Assert.Fail();
+            string css = 
+            @".class {
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAABCAYAAA==)
+            }";
+            string cssResult = handler.fixupCss("/yui/ver/modulue/assets/dataUri.css", css);
+
+            Assert.Contains(cssResult, "url(data:image/png;base64,iV");
+        }
+
+        [Test]
+        public void Handler_DoesNotTryToFixAbsoluteUrls()
+        {
+            string css =
+            @".class {
+                background-image: url(http://www.google.com/css/foo.png)
+            }";
+            string cssResult = handler.fixupCss("/yui/ver/modulue/assets/absUrl.css", css);
+
+            Assert.Contains(cssResult, "url(http://www.google.com/css/foo.png)");
         }
     }
 }

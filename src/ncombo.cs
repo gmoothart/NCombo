@@ -63,7 +63,7 @@ namespace NCombo
         /// http://developer.yahoo.net/yui/license.html
         /// version: 1.0.0b2
         /// </remarks>
-        private string fixupCss(string path, string contents)
+        public string fixupCss(string path, string contents)
         {
             string resourceBase = path.Substring(0, path.LastIndexOf("/") + 1);
             string resourceContent = contents;
