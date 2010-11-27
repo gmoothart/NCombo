@@ -72,48 +72,30 @@ namespace NCombo
             //Handle image path corrections (order is important)
 
             // just filename or subdirs/filename (e.g) url(foo.png), url(foo/foo.png)
-            //$crtResourceContent = preg_replace(
-            //    '/((url\()([^\.\.|^http]\S+)(\)))/', '${2}'. 
-            //    $crtResourceBase . '${3}${4}', $crtResourceContent);
             resourceContent = Regex.Replace(resourceContent,
-                @"/((url\()([^\.\.|^http]\S+)(\)))/",
+                @"((url\()([^\.\.|^http]\S+)(\)))",
                 resourceBase + "$3$4");
               
             // slash filename (e.g.) url(/whatever)
-            //$crtResourceContent = str_replace(
-            //    "url(/", 
-            //    "url($crtResourceBase", $crtResourceContent);
             resourceContent = resourceContent.Replace("url(/", "url(" + resourceBase);
             
             // relative paths (e.g.) url(../../foo.png)
-            //$crtResourceContent = preg_replace(
-            //    '/(url\()(\.\.\/)+/', 
-            //    'url(' . $base, $crtResourceContent); 
             resourceContent = Regex.Replace(resourceContent,
-                @"/(url\()(\.\.\/)+/",
-                "url(" + resourceBase);
+                @"(url\()(\.\.\/)+",
+                m => {
+                    // shave "url(" off the match, giving only the ../../ part
+                    string relativePart = m.Groups[0].Value.Substring(4);
+                    return "url(" + resourceBase + relativePart;
+                });
             
             // AlphaImageLoader relative paths (e.g.) AlphaImageLoader(src='../../foo.png')
-            //$crtResourceContent = preg_replace_callback(
-            //    '/AlphaImageLoader\(src=[\'"](.*?)[\'"]/',
-            //    'alphaImageLoaderPathCorrection',
-            //    $crtResourceContent); 
-
-              //$matchedFile  = substr($matches[1], strrpos($matches[1], "/") + 1);
-              //$newFilePath = 'AlphaImageLoader(src=\'' . $crtResourceBase . $matchedFile . ''';
             resourceContent = Regex.Replace(resourceContent,
-                @"/AlphaImageLoader\(src=['""](.*?)['""]/",
+                @"AlphaImageLoader\(src=['""](.*?)['""]",
                 m => {
                     string match1 = m.Groups[1].Value;
                     string matchedFile = match1.Substring(match1.LastIndexOf("/") + 1);
                     return "AlphaImageLoader(src='" + resourceBase + matchedFile + "'";
                 });
-
-            
-            //Cleanup build path dups caused by relative paths that already
-            //included the build directory
-            //$rawCss = str_replace("/build/build/", "/build/", $rawCss);
-            resourceContent = resourceContent.Replace("/build/build/", "/build/");
 
             return resourceContent;
         }
