@@ -1,17 +1,12 @@
 ﻿/* relative path */
 .relClass {
-    background:#d8d8d8 url(../../../../assets/skins/sam/relPath.png)
+    background:#d8d8d8 url(../../../../assets/skins/sam/relPath.png);
 }
 
 /* dir/subdir path */
 .yui3-skin-sam .yui3-tab-label {
-    background:#d8d8d8 url(assets/skins/sam/subDir.png)
-    background:#d8d8d8 url(dir.png)
-}
-
-/* root-absolute path */
-.yui3-skin-sam .yui3-tab-label {
-    background:#d8d8d8 url(/assets/skins/sam/root.png)
+    background:#d8d8d8 url(assets/skins/sam/subDir.png);
+    background:#d8d8d8 url(dir.png);
 }
 
 /* AlphaImageLoader paths */

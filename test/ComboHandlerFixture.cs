@@ -125,15 +125,14 @@ namespace NComboTest
         /// Ensure that css asset paths are rewritten for:
         /// 1. relative paths (e.g.) url(../../foo.png)
         /// 2. just filename or subdirs/filename (e.g) url(foo.png), url(foo/foo.png)
-        /// 3. slash filename (e.g.) url(/whatever)
-        /// 4. AlphaImageLoader relative paths (e.g.) AlphaImageLoader(src='../../foo.png')
+        /// 3. AlphaImageLoader relative paths (e.g.) AlphaImageLoader(src='../../foo.png')
         /// </summary>
         [Test]
         public void Handler_FixesCssPaths()
         {
             mockRequest.Setup(m => m.Url)
-                       .Returns(new Uri("http://app/ncombo.axd?file/relPaths.css"));
-            mockServer.Setup(m => m.MapPath("/yui/ver/build/module/assets/relPaths.css"))
+                       .Returns(new Uri("http://app/ncombo.axd?ver/build/module/relPaths.css"));
+            mockServer.Setup(m => m.MapPath("/yui/ver/build/module/relPaths.css"))
                       .Returns(@"..\..\testStylesheets\relPaths.css");
 
             string outCss = "";
@@ -142,24 +141,27 @@ namespace NComboTest
 
             handle();
 
-            Console.Write(outCss);
+            //for debugging
+            //Console.Write(outCss);
 
             mockResponse.Verify(m => m.Write(
-                It.Is<string>(s => s.Contains("/yui/ver/build/module/assets/../../../../assets/skins/sam/relPath.png"))),
-                "path not found in " + outCss);
+                It.Is<string>(s => s.Contains("/yui/ver/build/module/../../../../assets/skins/sam/relPath.png"))),
+                "fixed relative path not found");
             mockResponse.Verify(m => m.Write(
                 It.Is<string>(s => s.Contains("/yui/ver/build/module/assets/skins/sam/subDir.png"))),
-                "path not found in " + outCss);
+                "fixed subdir path not found");
             mockResponse.Verify(m => m.Write(
                 It.Is<string>(s => s.Contains("/yui/ver/build/module/dir.png"))),
-                "path not found in " + outCss);
-            mockResponse.Verify(m => m.Write(
-                It.Is<string>(s => s.Contains("/yui/ver/build/assets/skins/sam/root.png"))),
-                "path not found in " + outCss);
+                "fixed file path not found");
             mockResponse.Verify(m => m.Write(
                 It.Is<string>(s => s.Contains("src='/yui/ver/build/module/../Images/alpha.png'"))),
-                "path not found in " + outCss);
-                
+                "fixed alpha path not found");                
+        }
+
+        [Test]
+        public void Handler_DoesNotTryToFixDataUris()
+        {
+            Assert.Fail();
         }
     }
 }

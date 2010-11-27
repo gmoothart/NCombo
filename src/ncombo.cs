@@ -67,36 +67,19 @@ namespace NCombo
         {
             string resourceBase = path.Substring(0, path.LastIndexOf("/") + 1);
             string resourceContent = contents;
-
-
-            //Handle image path corrections (order is important)
-
-            // just filename or subdirs/filename (e.g) url(foo.png), url(foo/foo.png)
-            resourceContent = Regex.Replace(resourceContent,
-                @"((url\()([^\.\.|^http|^data]\S+)(\)))",
-                resourceBase + "$3$4");
-
-            // slash filename (e.g.) url(/whatever)
-            resourceContent = resourceContent.Replace("url(/", "url(" + resourceBase);
             
-            // relative paths (e.g.) url(../../foo.png)
+            // fix url for relative paths (e.g. ../../foo.png), 
+            // just filename (e.g. url(foo.png) ), or subdirs/filename (e.g. url(foo/foo.png) )
+            // don't match absolute urls or data uris.
             resourceContent = Regex.Replace(resourceContent,
-                @"(url\()(\.\.\/)+",
-                m => {
-                    // shave "url(" off the match, giving only the ../../ part
-                    string relativePart = m.Groups[0].Value.Substring(4);
-                    return "url(" + resourceBase + relativePart;
-                });
+                @"(url\()(?!(http|data))(\S+)(\))",
+                "$1" + resourceBase + "$3$4");
             
             // AlphaImageLoader relative paths (e.g.) AlphaImageLoader(src='../../foo.png')
             resourceContent = Regex.Replace(resourceContent,
                 @"AlphaImageLoader\(src=['""](.*?)['""]",
-                m => {
-                    string match1 = m.Groups[1].Value;
-                    string matchedFile = match1.Substring(match1.LastIndexOf("/") + 1);
-                    return "AlphaImageLoader(src='" + resourceBase + matchedFile + "'";
-                });
-
+                "AlphaImageLoader(src='" + resourceBase + "$1'");
+            
             return resourceContent;
         }
 

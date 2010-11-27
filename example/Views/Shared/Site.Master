@@ -7,7 +7,7 @@
     <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
+<body class="yui3-skin-sam  yui-skin-sam">
     <div class="page">
 
         <div id="header">
