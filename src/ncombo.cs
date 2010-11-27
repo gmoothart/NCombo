@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web;
 using System.IO;
 using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NCombo
 {
@@ -33,19 +35,20 @@ namespace NCombo
 
             // TODO: cache
             // copy individual file streams to the output
-            foreach (string p in paths) {
-                string filePath = context.Server.MapPath(p);
+            foreach (string virtualPath in paths) {
+                string filePath = context.Server.MapPath(virtualPath);
                 if (!File.Exists(filePath)) {
                     RespondFileNotFound(context);
                 }
                 string contents = File.ReadAllText(filePath);
 
-                if (isCSS(p)) {
-                    contents = fixupCss(p, contents);
+                if (isCSS(virtualPath)) {
+                    contents = fixupCss(virtualPath, contents);
                 }
 
                 context.Response.Write(contents);
                 context.Response.Write('\n');
+                context.Response.Flush();
             }
         }
 
@@ -62,49 +65,57 @@ namespace NCombo
         /// </remarks>
         private string fixupCss(string path, string contents)
         {
-            //string basePath = 
+            string resourceBase = path.Substring(0, path.LastIndexOf("/") + 1);
+            string resourceContent = contents;
 
-            return contents;
-            /*
-                css post-processing from the php loader:
-                $cssResourceList = $loader->css_data();
-            foreach ($cssResourceList["css"] as $cssResource=>$val) {
-                foreach (
-                    $cssResourceList["css"][$cssResource] as $key=>$value
-                ) {
-                     $crtResourceBase = substr($key, 0, strrpos($key, "/") + 1);
-                     $crtResourceContent = $loader->getRemoteContent($key);
-                     
-                     //Handle image path corrections (order is important)
-                     $crtResourceContent = preg_replace(
-                         '/((url\()([^\.\.|^http]\S+)(\)))/', '${2}'. 
-                         $crtResourceBase . '${3}${4}', $crtResourceContent
-                     ); // just filename or subdirs/filename (e.g) url(foo.png),
-                        // url(foo/foo.png)
-                     $crtResourceContent = str_replace(
-                         "url(/", 
-                         "url($crtResourceBase", $crtResourceContent
-                     ); // slash filename (e.g.) url(/whatever)
-                     $crtResourceContent = preg_replace(
-                         '/(url\()(\.\.\/)+/', 
-                         'url(' . $base, $crtResourceContent
-                     ); // relative paths (e.g.) url(../../foo.png)
-                     $crtResourceContent = preg_replace_callback(
-                         '/AlphaImageLoader\(src=[\'"](.*?)[\'"]/',
-                         'alphaImageLoaderPathCorrection',
-                         $crtResourceContent
-                     ); // AlphaImageLoader relative paths (e.g.) 
-                        // AlphaImageLoader(src='../../foo.png')
-                     
-                     $rawCss .= $crtResourceContent;
-                }
-            }
+
+            //Handle image path corrections (order is important)
+
+            // just filename or subdirs/filename (e.g) url(foo.png), url(foo/foo.png)
+            //$crtResourceContent = preg_replace(
+            //    '/((url\()([^\.\.|^http]\S+)(\)))/', '${2}'. 
+            //    $crtResourceBase . '${3}${4}', $crtResourceContent);
+            resourceContent = Regex.Replace(resourceContent,
+                @"/((url\()([^\.\.|^http]\S+)(\)))/",
+                resourceBase + "$3$4");
+              
+            // slash filename (e.g.) url(/whatever)
+            //$crtResourceContent = str_replace(
+            //    "url(/", 
+            //    "url($crtResourceBase", $crtResourceContent);
+            resourceContent = resourceContent.Replace("url(/", "url(" + resourceBase);
+            
+            // relative paths (e.g.) url(../../foo.png)
+            //$crtResourceContent = preg_replace(
+            //    '/(url\()(\.\.\/)+/', 
+            //    'url(' . $base, $crtResourceContent); 
+            resourceContent = Regex.Replace(resourceContent,
+                @"/(url\()(\.\.\/)+/",
+                "url(" + resourceBase);
+            
+            // AlphaImageLoader relative paths (e.g.) AlphaImageLoader(src='../../foo.png')
+            //$crtResourceContent = preg_replace_callback(
+            //    '/AlphaImageLoader\(src=[\'"](.*?)[\'"]/',
+            //    'alphaImageLoaderPathCorrection',
+            //    $crtResourceContent); 
+
+              //$matchedFile  = substr($matches[1], strrpos($matches[1], "/") + 1);
+              //$newFilePath = 'AlphaImageLoader(src=\'' . $crtResourceBase . $matchedFile . ''';
+            resourceContent = Regex.Replace(resourceContent,
+                @"/AlphaImageLoader\(src=['""](.*?)['""]/",
+                m => {
+                    string match1 = m.Groups[1].Value;
+                    string matchedFile = match1.Substring(match1.LastIndexOf("/") + 1);
+                    return "AlphaImageLoader(src='" + resourceBase + matchedFile + "'";
+                });
+
             
             //Cleanup build path dups caused by relative paths that already
             //included the build directory
-            $rawCss = str_replace("/build/build/", "/build/", $rawCss);
+            //$rawCss = str_replace("/build/build/", "/build/", $rawCss);
+            resourceContent = resourceContent.Replace("/build/build/", "/build/");
 
-             */
+            return resourceContent;
         }
 
         private bool isCSS(string path)

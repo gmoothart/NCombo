@@ -117,8 +117,49 @@ namespace NComboTest
                       .Returns(@"..\..\testScripts\test1.css");
 
             handle();
-
+            
             mockResponse.VerifySet(m => m.ContentType = "text/css");
+        }
+        
+        /// <summary>
+        /// Ensure that css asset paths are rewritten for:
+        /// 1. relative paths (e.g.) url(../../foo.png)
+        /// 2. just filename or subdirs/filename (e.g) url(foo.png), url(foo/foo.png)
+        /// 3. slash filename (e.g.) url(/whatever)
+        /// 4. AlphaImageLoader relative paths (e.g.) AlphaImageLoader(src='../../foo.png')
+        /// </summary>
+        [Test]
+        public void Handler_FixesCssPaths()
+        {
+            mockRequest.Setup(m => m.Url)
+                       .Returns(new Uri("http://app/ncombo.axd?file/relPaths.css"));
+            mockServer.Setup(m => m.MapPath("/yui/ver/build/module/assets/relPaths.css"))
+                      .Returns(@"..\..\testStylesheets\relPaths.css");
+
+            string outCss = "";
+            mockResponse.Setup(m => m.Write(It.IsAny<string>()))
+                .Callback<string>(s => { outCss = s; });
+
+            handle();
+
+            Console.Write(outCss);
+
+            mockResponse.Verify(m => m.Write(
+                It.Is<string>(s => s.Contains("/yui/ver/build/module/assets/../../../../assets/skins/sam/relPath.png"))),
+                "path not found in " + outCss);
+            mockResponse.Verify(m => m.Write(
+                It.Is<string>(s => s.Contains("/yui/ver/build/module/assets/skins/sam/subDir.png"))),
+                "path not found in " + outCss);
+            mockResponse.Verify(m => m.Write(
+                It.Is<string>(s => s.Contains("/yui/ver/build/module/dir.png"))),
+                "path not found in " + outCss);
+            mockResponse.Verify(m => m.Write(
+                It.Is<string>(s => s.Contains("/yui/ver/build/assets/skins/sam/root.png"))),
+                "path not found in " + outCss);
+            mockResponse.Verify(m => m.Write(
+                It.Is<string>(s => s.Contains("src='/yui/ver/build/module/../Images/alpha.png'"))),
+                "path not found in " + outCss);
+                
         }
     }
 }

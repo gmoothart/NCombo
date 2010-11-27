@@ -63,6 +63,7 @@
     <Content Include="testScripts\test3.js" />
     <Content Include="testScripts\test2.js" />
     <Content Include="testScripts\test1.js" />
+    <Content Include="testStylesheets\relPaths.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

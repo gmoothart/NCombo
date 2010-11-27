@@ -9,7 +9,7 @@
     <properties />
   </testPackage>
   <testFilters>
-    <testFilter filterName="LastRun" filterExpr="" />
+    <testFilter filterName="LastRun" filterExpr="Id: b761a4f729081fb0" />
     <testFilter filterName="AutoSave" filterExpr="" />
   </testFilters>
   <extensionSpecifications />
