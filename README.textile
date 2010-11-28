@@ -1,0 +1,13 @@
+
+h1. NCombo
+
+An http resource combo-loader, for requesting multiple css/js files in a single request.  Tuned and primarily intended for use with yui3, but could be useful with other libraries too.
+
+h2. Todo
+
+* Add yui2in3, gallery support
+* Add configuration section to override default root directory, etc.
+* Add support for custom modules.
+* Add example usage
+* Add server-side caching
+
