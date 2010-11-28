@@ -48,7 +48,6 @@ namespace NCombo
 
                 context.Response.Write(contents);
                 context.Response.Write('\n');
-                context.Response.Flush();
             }
         }
 
