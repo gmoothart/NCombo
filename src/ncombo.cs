@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -10,8 +11,7 @@ namespace NCombo
 {
     public class ComboHandler : BaseHttpHandler
     {
-        // TODO: make this configurable
-        private string yuiDir = "~/yui/";
+        private string yuiDir = ConfigurationManager.AppSettings["yuiDir"];
 
         public override void HandleRequest(HttpContextBase context)
         {
