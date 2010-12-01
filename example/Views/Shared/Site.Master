@@ -37,24 +37,14 @@
         </div>
     </div>
     <script type="text/javascript">
+        /*
+        * Set up YUI to use our custom combo-loader
+        */
         YUI_config = {
             comboBase: '<%= Url.Content("~/ncombo.axd") %>?',
             combine: true,
-            //gallery: 'gallery-2010.08.18-17-12',
-            modules: {
-                'gallery-aui-skin-base': {
-                    fullpath: 'http://yui.yahooapis.com/gallery-2010.08.18-17-12/build/gallery-aui-skin-base/css/gallery-aui-skin-base-min.css',
-                    type: 'css'
-                },
-                'gallery-aui-skin-classic': {
-                    fullpath: 'http://yui.yahooapis.com/gallery-2010.08.18-17-12/build/gallery-aui-skin-classic/css/gallery-aui-skin-classic-min.css',
-                    type: 'css',
-                    requires: ['gallery-aui-skin-base']
-                }
-            },
             groups: {
                 yui2: {
-                    //base: 'build/',
                     combine: true,
                     comboBase: '<%= Url.Content("~/ncombo.axd") %>?',
                     root: '2in3/2.8.0/build/',
@@ -76,6 +66,14 @@
         };
     </script>
     <script type="text/javascript" src="<%= Url.Content("~/yui/3.2.0/build/yui/yui.js") %>"></script>
+    <script type="text/javascript" src="<%= Url.Content("~/yui/alloy/build/aui/aui.js") %>"></script>
+    <script type="text/javascript">
+        // custom alloy config overrides
+        YUI.AUI_config.combine = true;
+        YUI.AUI_config.groups.alloy.combine = true;
+        YUI.AUI_config.groups.alloy.comboBase = '<%= Url.Content("~/ncombo.axd") %>?';
+        YUI.AUI_config.groups.alloy.root = 'alloy/build/';
+    </script>
     <script type="text/javascript" src="<%= Url.Content("~/Scripts/comboTest.js") %>">
     </script>
 </body>

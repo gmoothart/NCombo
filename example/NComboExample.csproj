@@ -1200,11 +1200,20 @@
     <Content Include="yui\3.2.0\build\yui\yui-throttle-min.js" />
     <Content Include="yui\3.2.0\build\yui\yui-throttle.js" />
     <Content Include="yui\3.2.0\build\yui\yui.js" />
+    <Content Include="yui\aui\build\aui-calendar\assets\aui-calendar-base-core.css" />
+    <Content Include="yui\aui\build\aui-calendar\assets\aui-calendar-core.css" />
+    <Content Include="yui\aui\build\aui-calendar\assets\skins\sam\aui-calendar-skin.css" />
+    <Content Include="yui\aui\build\aui-calendar\assets\skins\sam\aui-calendar.css" />
+    <Content Include="yui\aui\build\aui-calendar\aui-calendar-base-debug.js" />
+    <Content Include="yui\aui\build\aui-calendar\aui-calendar-base-min.js" />
+    <Content Include="yui\aui\build\aui-calendar\aui-calendar-base.js" />
+    <Content Include="yui\aui\build\aui-calendar\aui-calendar-debug.js" />
+    <Content Include="yui\aui\build\aui-calendar\aui-calendar-min.js" />
+    <Content Include="yui\aui\build\aui-calendar\aui-calendar.js" />
+    <Content Include="yui\aui\build\aui\aui-min.js" />
+    <Content Include="yui\aui\build\aui\aui.js" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="2in3\" />
-    <Folder Include="yui\gallery\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\src\NCombo.csproj">
       <Project>{9B2575BF-935A-4E8D-AF9E-FF14C1058372}</Project>

@@ -68,7 +68,6 @@ namespace NCombo
             // fix url for relative paths (e.g. ../../foo.png), 
             // just filename (e.g. url(foo.png) ), or subdirs/filename (e.g. url(foo/foo.png) )
             // don't match absolute urls or data uris.
-            
             resourceContent = cssRelativeUrl.Replace(resourceContent,
                 "$1" + resourceBase + "$3$4");
             
