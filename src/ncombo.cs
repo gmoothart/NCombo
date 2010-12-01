@@ -13,9 +13,11 @@ namespace NCombo
     {
         private string yuiDir = ConfigurationManager.AppSettings["yuiDir"];
 
+        Regex cssRelativeUrl = new Regex(@"(url\()(?!(http|data))(\S+)(\))");
+        Regex cssAlphaImageUrl = new Regex(@"AlphaImageLoader\(src=['""](.*?)['""]");
+
         public override void HandleRequest(HttpContextBase context)
         {
-
             string q = context.Request.Url.Query.Substring(1);
 
             var paths =
@@ -55,12 +57,8 @@ namespace NCombo
         /// When combo-loading, css paths get mixed up. Must fix that
         /// </summary>
         /// <remarks>
-        /// Regular Expressions and logic borrowed from the PHP Loader:
+        /// Regular Expressions and logic inspired by the PHP Loader:
         /// https://github.com/yui/phploader/blob/master/phploader/combo.php
-        /// The PHP Loader is Copyright (c) 2009, Yahoo! Inc. All rights reserved.
-        /// Code licensed under the BSD License:
-        /// http://developer.yahoo.net/yui/license.html
-        /// version: 1.0.0b2
         /// </remarks>
         public string fixupCss(string path, string contents)
         {
@@ -70,13 +68,12 @@ namespace NCombo
             // fix url for relative paths (e.g. ../../foo.png), 
             // just filename (e.g. url(foo.png) ), or subdirs/filename (e.g. url(foo/foo.png) )
             // don't match absolute urls or data uris.
-            resourceContent = Regex.Replace(resourceContent,
-                @"(url\()(?!(http|data))(\S+)(\))",
+            
+            resourceContent = cssRelativeUrl.Replace(resourceContent,
                 "$1" + resourceBase + "$3$4");
             
             // AlphaImageLoader relative paths (e.g.) AlphaImageLoader(src='../../foo.png')
-            resourceContent = Regex.Replace(resourceContent,
-                @"AlphaImageLoader\(src=['""](.*?)['""]",
+            resourceContent = cssAlphaImageUrl.Replace(resourceContent,
                 "AlphaImageLoader(src='" + resourceBase + "$1'");
             
             return resourceContent;
