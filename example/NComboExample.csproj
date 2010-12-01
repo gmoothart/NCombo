@@ -87,6 +87,77 @@
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Views\Shared\Site.Master" />
     <Content Include="Views\Web.config" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\ajax-loader.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\asc.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\autocomplete.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\back-h.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\back-v.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\bar-h.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\bar-v.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\bg-h.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\bg-v.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\blankimage.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\button.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\calendar.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\carousel.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\check0.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\check1.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\check2.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\colorpicker.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\container.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\datatable.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\desc.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\dt-arrow-dn.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\dt-arrow-up.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\editor-knob.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\editor-sprite-active.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\editor-sprite.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\editor.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\header_background.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\hue_bg.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\imagecropper.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\layout.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\layout_sprite.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\loading.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\logger.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\menu-button-arrow-disabled.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\menu-button-arrow.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\menu.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\menubaritem_submenuindicator.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\menubaritem_submenuindicator_disabled.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\menuitem_checkbox.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\menuitem_checkbox_disabled.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\menuitem_submenuindicator.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\menuitem_submenuindicator_disabled.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\paginator.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\picker_mask.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\profilerviewer.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\progressbar.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\resize.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\simpleeditor.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\skin.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\slider.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\split-button-arrow-active.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\split-button-arrow-disabled.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\split-button-arrow-focus.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\split-button-arrow-hover.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\split-button-arrow.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\sprite.png" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\tabview.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\treeview-loading.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\treeview-sprite.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\treeview.css" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\wait.gif" />
+    <Content Include="yui\2in3\2.8.0\build\assets\skins\sam\yuitest.css" />
+    <Content Include="yui\2in3\2.8.0\build\yui2-calendar\yui2-calendar-debug.js" />
+    <Content Include="yui\2in3\2.8.0\build\yui2-calendar\yui2-calendar-min.js" />
+    <Content Include="yui\2in3\2.8.0\build\yui2-calendar\yui2-calendar.js" />
+    <Content Include="yui\2in3\2.8.0\build\yui2-dom\yui2-dom-debug.js" />
+    <Content Include="yui\2in3\2.8.0\build\yui2-dom\yui2-dom-min.js" />
+    <Content Include="yui\2in3\2.8.0\build\yui2-dom\yui2-dom.js" />
+    <Content Include="yui\2in3\2.8.0\build\yui2-event\yui2-event-debug.js" />
+    <Content Include="yui\2in3\2.8.0\build\yui2-event\yui2-event-min.js" />
+    <Content Include="yui\2in3\2.8.0\build\yui2-event\yui2-event.js" />
     <Content Include="yui\3.2.0\build\anim\anim-base-debug.js" />
     <Content Include="yui\3.2.0\build\anim\anim-base-min.js" />
     <Content Include="yui\3.2.0\build\anim\anim-base.js" />
@@ -1130,12 +1201,18 @@
     <Content Include="yui\3.2.0\build\yui\yui-throttle.js" />
     <Content Include="yui\3.2.0\build\yui\yui.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="2in3\" />
+    <Folder Include="yui\gallery\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\NCombo.csproj">
       <Project>{9B2575BF-935A-4E8D-AF9E-FF14C1058372}</Project>
       <Name>NCombo</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="yui\2in3\2.8.0\build\assets\skins\sam\sprite.psd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

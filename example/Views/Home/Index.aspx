@@ -10,4 +10,6 @@
         To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
     </p>
     <div id="tabs"></div>
+    <input type="text" id="alloyCalendar"></input>
+    <div id="yui2Calendar"></div>
 </asp:Content>

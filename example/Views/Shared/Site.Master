@@ -39,7 +39,39 @@
     <script type="text/javascript">
         YUI_config = {
             comboBase: '<%= Url.Content("~/ncombo.axd") %>?',
-            combine: true
+            combine: true,
+            //gallery: 'gallery-2010.08.18-17-12',
+            modules: {
+                'gallery-aui-skin-base': {
+                    fullpath: 'http://yui.yahooapis.com/gallery-2010.08.18-17-12/build/gallery-aui-skin-base/css/gallery-aui-skin-base-min.css',
+                    type: 'css'
+                },
+                'gallery-aui-skin-classic': {
+                    fullpath: 'http://yui.yahooapis.com/gallery-2010.08.18-17-12/build/gallery-aui-skin-classic/css/gallery-aui-skin-classic-min.css',
+                    type: 'css',
+                    requires: ['gallery-aui-skin-base']
+                }
+            },
+            groups: {
+                yui2: {
+                    //base: 'build/',
+                    combine: true,
+                    comboBase: '<%= Url.Content("~/ncombo.axd") %>?',
+                    root: '2in3/2.8.0/build/',
+
+                    patterns: {
+                        'yui2-': {
+                            configFn: function (me) {
+                                if (/-skin|reset|fonts|grids|base/.test(me.name)) {
+                                    me.type = 'css';
+                                    me.path = me.path.replace(/\.js/, '.css');
+                                    me.path = me.path.replace(/\/yui2-skin/, '/assets/skins/sam/yui2-skin');
+                                } // if css
+                            }
+                        }
+                    } // patterns
+                } // yui2
+            } // groups
 
         };
     </script>
