@@ -1,9 +1,11 @@
-﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+﻿ <%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+	<link rel="stylesheet" href="<%= Url.Content("~/yui/gallery/build/gallery-aui-skin-base/css/gallery-aui-skin-base-min.css") %>" type="text/css" />
+    <link rel="stylesheet" href="<%= Url.Content("~/yui/gallery/build/gallery-aui-skin-classic/css/custom.css") %>" type="text/css" />
     <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -43,10 +45,10 @@
         YUI_config = {
             comboBase: '<%= Url.Content("~/ncombo.axd") %>?',
             combine: true,
+            //filter: 'debug',
             groups: {
                 yui2: {
                     combine: true,
-                    comboBase: '<%= Url.Content("~/ncombo.axd") %>?',
                     root: '2in3/2.8.0/build/',
 
                     patterns: {
@@ -60,20 +62,20 @@
                             }
                         }
                     } // patterns
-                } // yui2
+                }, // yui2
+                gallery: {
+                    combine: true,
+                    root: 'gallery/build/',
+                    patterns: { 'gallery-': {},
+                        'gallerycss-': { type: 'css'}
+                    }
+                } // gallery
             } // groups
 
         };
     </script>
     <script type="text/javascript" src="<%= Url.Content("~/yui/3.2.0/build/yui/yui.js") %>"></script>
-    <script type="text/javascript" src="<%= Url.Content("~/yui/alloy/build/aui/aui.js") %>"></script>
-    <script type="text/javascript">
-        // custom alloy config overrides
-        YUI.AUI_config.combine = true;
-        YUI.AUI_config.groups.alloy.combine = true;
-        YUI.AUI_config.groups.alloy.comboBase = '<%= Url.Content("~/ncombo.axd") %>?';
-        YUI.AUI_config.groups.alloy.root = 'alloy/build/';
-    </script>
+    <!--script src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js"></script-->
     <script type="text/javascript" src="<%= Url.Content("~/Scripts/comboTest.js") %>">
     </script>
 </body>

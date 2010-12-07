@@ -1,0 +1,16 @@
+.yui3-calendar{width:200px;}
+.yui3-calendar-content{border:1px solid #ddd;padding:3px;}
+.yui3-calendar-hd{padding:5px;position:relative;}
+.yui3-calendar-hd .aui-icon{position:absolute;top:5px;}
+.yui3-calendar-hd .aui-icon-circle-triangle-l{left:2px;}
+.yui3-calendar-hd .aui-icon-circle-triangle-r{right:2px;}
+.yui3-calendar-title{font-weight:bold;line-height:16px;margin:0 15px;text-align:center;}
+.yui3-calendar-week{float:left;text-align:center;width:27px;}
+.yui3-calendar-day{color:#000;float:left;margin:0 0 3px 3px;text-align:center;text-decoration:none;width:22px;}
+.yui3-calendar-day-blank{float:left;height:16px;margin:0 0 3px 3px;text-align:center;width:24px;_width:23px;}
+.yui3-calendar-day-padding-end,.aui-calendar-day-padding-start{border:1px dashed #aaa;opacity:.50;-ms-filter:alpha(opacity=50);filter:alpha(opacity=50);}
+.yui3-calendar-day-hidden{display:none;}
+.yui3-calendar-disabled{border-color:#C8C9CA #9E9E9E #9E9E9E #C8C9CA;border-style:solid;border-width:1px;opacity:.30;-ms-filter:alpha(opacity=30);filter:alpha(opacity=30);}
+.yui3-calendar-link{text-decoration:none;}
+.yui3-calendar-link-today{float:left;}
+.yui3-calendar-link-none{float:right;}

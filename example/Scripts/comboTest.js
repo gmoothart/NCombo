@@ -4,7 +4,7 @@ YUI().use('node',
           'scrollview',
           'tabview',
           'yui2-calendar',
-          'aui-calendar',
+          'gallery-aui-calendar',
 function (Y) {
     Y.one('#main h2').setContent('Welcome to YUI 3!');
 
@@ -27,15 +27,14 @@ function (Y) {
     //
     // alloy UI calendar
     //
-
     var alloyCalendar = new Y.Calendar({
-        trigger: '#alloyCalendar',
+        trigger: '#alloyTxt',
         dates: ['09/14/2009', '09/15/2009'],
         dateFormat: '%d/%m/%y %A',
         setValue: true,
         selectMultipleDates: true
     }).render();
-    
+
     //
     // yui2 calendar
     //
