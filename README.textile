@@ -33,9 +33,7 @@ All files served by NCombo must be in a common root directory. The default is ~/
   </appSettings>
 </code></pre>
 
-The only thing left to do is to tell YUI about your custom combo-handler.
-Below is an example that configures YUI itself and a custom directory for
-gallery modules.
+The only thing left to do is to tell YUI about your custom combo-handler.  Below is an example that configures YUI itself and a custom directory for gallery modules.
 
 <pre><code>
   YUI_config = {
