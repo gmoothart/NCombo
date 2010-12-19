@@ -10,7 +10,7 @@ h2. How to Use
 
 NCombo is an asp.net http handler. In order to use it, you must register it with your app:
 
-<code>
+<code><pre>
   <!-- for IIS 6 -->
   <system.web>
     <httpHandlers>
@@ -26,22 +26,22 @@ NCombo is an asp.net http handler. In order to use it, you must register it with
       <add name="ncombo" verb="GET" path="ncombo.axd" type="NCombo.ComboHandler, NCombo" />
     </handlers>
   <system.webServer>
-</code>
+</pre></code>
 
 All files served by NCombo must be in a common root directory. The default is ~/yui/, 
 but this can be customized with the "yuiDir" AppSetting value:
 
-<code>
+<code><pre>
   <appSettings>
     <add key="yuiDir" value="~/baseDir/" />
   </appSettings>
-</code>
+</pre></code>
 
 The only thing left to do is to tell YUI about your custom combo-handler.
 Below is an example that configures YUI itself and a custom directory for
 gallery modules.
 
-<code>
+<code><pre>
   YUI_config = {
       comboBase: '<%= Url.Content("~/ncombo.axd") %>?',
       combine: true,
@@ -56,7 +56,7 @@ gallery modules.
           } // gallery
       } // groups
   };
-</code>
+</pre></code>
 
 The example project includes working examples for serving YUI 3.x itself,
 YUI 2in3, and custom modules like those in the gallery.
