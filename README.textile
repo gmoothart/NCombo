@@ -1,14 +1,11 @@
 
 h1. NCombo
 
-An http resource combo-loader, for requesting multiple .css or .js files in a 
-single request.  Tuned and primarily intended for use with YUI 3, but could be 
-useful in any scenarion where you want to minimize http traffic by combining
-text resources.
+An http resource combo-loader, for requesting multiple .css or .js files in a single request.  Tuned and primarily intended for use with YUI 3, but could be useful in any scenarion where you want to minimize http traffic by combining text resources.
 
 h2. How to Use
 
-NCombo is an asp.net http handler. In order to use it, you must register it with your app:
+NCombo is an asp.net http handler. In order to use it, you must register it in your web.config:
 
 <pre><code>
   <!-- for IIS 6 -->
@@ -28,8 +25,7 @@ NCombo is an asp.net http handler. In order to use it, you must register it with
   <system.webServer>
 </code></pre>
 
-All files served by NCombo must be in a common root directory. The default is ~/yui/, 
-but this can be customized with the "yuiDir" AppSetting value:
+All files served by NCombo must be in a common root directory. The default is ~/yui/, but this can be customized with the "yuiDir" AppSetting value:
 
 <pre><code>
   <appSettings>
@@ -58,10 +54,9 @@ gallery modules.
   };
 </code></pre>
 
-The example project includes working examples for serving YUI 3.x itself,
-YUI 2in3, and custom modules like those in the gallery.
+The example project includes working examples for serving YUI 3.x itself, YUI 2in3, and custom modules like those in the gallery.
 
 h2. Todo
 
 * Add server-side caching
-
+* smarter css path fixing to save a few extra bytes.
