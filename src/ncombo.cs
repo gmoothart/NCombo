@@ -11,13 +11,19 @@ namespace NCombo
 {
     public class ComboHandler : BaseHttpHandler
     {
-        private string yuiDir = ConfigurationManager.AppSettings["yuiDir"];
+        private string yuiDir;
 
         Regex cssRelativeUrl = new Regex(@"(url\()(?!(http|data))(\S+)(\))");
         Regex cssAlphaImageUrl = new Regex(@"AlphaImageLoader\(src=['""](.*?)['""]");
 
         public override void HandleRequest(HttpContextBase context)
         {
+            yuiDir = ConfigurationManager.AppSettings["yuiDir"];
+            if (string.IsNullOrEmpty(yuiDir))
+            {
+                yuiDir = "~/yui/";
+            }
+
             string q = context.Request.Url.Query.Substring(1);
 
             var paths =
