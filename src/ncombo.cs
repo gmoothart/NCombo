@@ -89,10 +89,13 @@ namespace NCombo
             return Path.GetExtension(path) == ".css";
         }
 
+
+        /// <summary>
+        /// Validate query string. At this stage, just make sure it exists.
+        /// </summary>
         public override bool ValidateParameters(HttpContextBase context)
         {
-            // TODO: validation on query string
-            return true;
+            return context.Request.QueryString.Count > 0;
         }
 
         public override void SetResponseCachePolicy(HttpCachePolicyBase cache)

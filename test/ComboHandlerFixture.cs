@@ -7,6 +7,7 @@ using NCombo;
 using System.Web;
 using Moq;
 using System.Collections.Specialized;
+using System.Net;
 
 namespace NComboTest
 {
@@ -180,6 +181,18 @@ namespace NComboTest
             string cssResult = handler.fixupCss("/yui/ver/modulue/assets/absUrl.css", css);
 
             Assert.Contains(cssResult, "url(http://www.google.com/css/foo.png)");
+        }
+
+        /// <summary>
+        /// Invalid query string should return a 500
+        /// </summary>
+        [Test]
+        public void Handler_ValidatesQueryString()
+        {
+            mockRequest.Setup(m => m.QueryString)
+                .Returns(new NameValueCollection());
+
+            Assert.IsFalse(handler.ValidateParameters(mockContext.Object));
         }
     }
 }
