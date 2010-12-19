@@ -63,8 +63,5 @@ YUI 2in3, and custom modules like those in the gallery.
 
 h2. Todo
 
-* Add configuration section to override default root directory, etc.
-* Add support for custom modules.
-* Add example usage
 * Add server-side caching
 
