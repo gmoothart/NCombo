@@ -21,11 +21,38 @@ namespace NCombo
             string baseDir = config.BaseDir;
 
             string q = context.Request.Url.Query.Substring(1);
+            var paths = from path in q.Split('&')
+                        where !string.IsNullOrEmpty(path)
+                        select VirtualPathUtility.ToAbsolute(baseDir + path, context.Request.ApplicationPath);
 
-            var paths =
-                from path in q.Split('&')
-                where !string.IsNullOrEmpty(path)
-                select VirtualPathUtility.ToAbsolute(baseDir + path, context.Request.ApplicationPath);
+            if (config.Cache.Enabled && fileCache.Contains(q))
+            {
+                // TODO: serve from cache
+            }
+            else
+            {
+                // copy individual file streams to the output
+                foreach (string virtualPath in paths)
+                {
+                    string filePath = context.Server.MapPath(virtualPath);
+                    if (!File.Exists(filePath))
+                    {
+                        RespondFileNotFound(context);
+                    }
+                    string contents = File.ReadAllText(filePath);
+
+                    if (isCSS(virtualPath))
+                    {
+                        contents = fixupCss(virtualPath, contents);
+                    }
+
+                    context.Response.Write(contents);
+                    context.Response.Write('\n');
+                }
+
+                // TODO: gzip?
+                // TODO: save in cache
+            }
 
             //
             // Set Mime Type
@@ -37,22 +64,7 @@ namespace NCombo
                 context.Response.ContentType = "application/x-javascript";
             }
 
-            // TODO: cache
-            // copy individual file streams to the output
-            foreach (string virtualPath in paths) {
-                string filePath = context.Server.MapPath(virtualPath);
-                if (!File.Exists(filePath)) {
-                    RespondFileNotFound(context);
-                }
-                string contents = File.ReadAllText(filePath);
 
-                if (isCSS(virtualPath)) {
-                    contents = fixupCss(virtualPath, contents);
-                }
-
-                context.Response.Write(contents);
-                context.Response.Write('\n');
-            }
         }
 
         /// <summary>

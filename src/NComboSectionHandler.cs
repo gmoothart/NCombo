@@ -14,6 +14,13 @@ namespace NCombo
             set { this["baseDir"] = value; }
         }
 
+        [ConfigurationProperty("gzip", DefaultValue = "false")]
+        public bool Gzip
+        {
+            get { return (bool)this["gzip"]; }
+            set { this["gzip"] = value; }
+        }
+
         [ConfigurationProperty("cache")]
         public NComboCacheElment Cache {
             get { return (NComboCacheElment)this["cache"]; }
@@ -28,11 +35,12 @@ namespace NCombo
             get { return (bool)this["enabled"]; }
             set { this["enabled"] = value; }
         }
-
-        [ConfigurationProperty("gzip", DefaultValue = "false")]
-        public bool Gzip {
-            get { return (bool)this["gzip"]; }
-            set { this["gzip"] = value; }
+        
+        [ConfigurationProperty("directory", DefaultValue = "~/yui/cache/")]
+        public string Directory {
+            get { return (string)this["directory"]; }
+            set { this["directory"] = value; }
         }
+
     }
 }
