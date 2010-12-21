@@ -11,25 +11,21 @@ namespace NCombo
 {
     public class ComboHandler : BaseHttpHandler
     {
-        private string yuiDir;
-
         Regex cssRelativeUrl = new Regex(@"(url\()(?!(http|data))(\S+)(\))");
         Regex cssAlphaImageUrl = new Regex(@"AlphaImageLoader\(src=['""](.*?)['""]");
+        FileCache fileCache = new FileCache();
 
         public override void HandleRequest(HttpContextBase context)
         {
-            yuiDir = ConfigurationManager.AppSettings["yuiDir"];
-            if (string.IsNullOrEmpty(yuiDir))
-            {
-                yuiDir = "~/yui/";
-            }
+            var config = (NComboSectionHandler)ConfigurationManager.GetSection("ncombo");
+            string baseDir = config.BaseDir;
 
             string q = context.Request.Url.Query.Substring(1);
 
             var paths =
                 from path in q.Split('&')
                 where !string.IsNullOrEmpty(path)
-                select VirtualPathUtility.ToAbsolute(yuiDir + path, context.Request.ApplicationPath);
+                select VirtualPathUtility.ToAbsolute(baseDir + path, context.Request.ApplicationPath);
 
             //
             // Set Mime Type

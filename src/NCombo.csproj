@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseHttpHandler.cs" />
-    <Compile Include="ncombo.cs" />
+    <Compile Include="FileCache.cs" />
+    <Compile Include="NCombo.cs" />
+    <Compile Include="NComboSectionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
