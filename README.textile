@@ -59,3 +59,4 @@ h2. Todo
 * Add server-side caching
 * smarter css path fixing to save a few extra bytes.
 * Add an option to gzip files before caching/serving them.
+* Make config section optional.
