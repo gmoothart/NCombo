@@ -42,13 +42,14 @@ namespace NCombo
         /// Creates a new <see cref="BaseHttpHandler"/> instance.
         /// </summary>
         public BaseHttpHandler() {
-            Init();
+            var ctx = new HttpContextWrapper(HttpContext.Current);
+            Init(ctx);
         }
 
         /// <summary>
         /// Code which is necessary to initialize this instance.
         /// </summary>
-        protected abstract void Init();
+        protected abstract void Init(HttpContextBase context);
 
         /// <summary>
         /// Processs the incoming HTTP request.
