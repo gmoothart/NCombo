@@ -8,6 +8,7 @@ using System.Web;
 using Moq;
 using System.Collections.Specialized;
 using System.Net;
+using System.IO;
 
 namespace NComboTest
 {
@@ -41,6 +42,19 @@ namespace NComboTest
                         .Throws(new ApplicationException("all done here"));
 
             mockServer = new Mock<HttpServerUtilityBase>();
+            mockServer.Setup(m => m.MapPath(It.Is<string>(s => s.StartsWith("~/yui/cache/"))))
+                      .Returns<string>(s => @"..\..\cacheDir\" + Path.GetFileName(s));
+
+            // set up cache dir
+            if (!Directory.Exists(@"..\..\cacheDir"))
+            {
+                Directory.CreateDirectory(@"..\..\cacheDir");
+            }
+
+            // make sure that no files are hanging around from a prior test run
+            foreach(string file in Directory.EnumerateFiles(@"..\..\cacheDir")) {
+                File.Delete(file);
+            }
 
             mockContext = new Mock<HttpContextBase>();
             mockContext.Setup(ctxt => ctxt.Request).Returns(mockRequest.Object);
@@ -103,6 +117,7 @@ namespace NComboTest
                        .Returns(new Uri("http://app/ncombo.axd?file/test1.js&file/test2.js&"));
             mockServer.Setup(m => m.MapPath("/yui/file/test1.js"))
                       .Returns(@"..\..\testScripts\test1.js");
+            
 
             handle();
 
@@ -137,25 +152,21 @@ namespace NComboTest
                       .Returns(@"..\..\testStylesheets\relPaths.css");
 
             string outCss = "";
-            mockResponse.Setup(m => m.Write(It.IsAny<string>()))
-                .Callback<string>(s => { outCss = s; });
+            mockResponse.Setup(m => m.WriteFile(It.IsAny<string>()))
+                .Callback<string>(s => { outCss = File.ReadAllText(s); });
 
             handle();
 
             //for debugging
             //Console.Write(outCss);
 
-            mockResponse.Verify(m => m.Write(
-                It.Is<string>(s => s.Contains("/yui/ver/build/module/../../../../assets/skins/sam/relPath.png"))),
+            Assert.Contains(outCss, "/yui/ver/build/module/../../../../assets/skins/sam/relPath.png",
                 "fixed relative path not found");
-            mockResponse.Verify(m => m.Write(
-                It.Is<string>(s => s.Contains("/yui/ver/build/module/assets/skins/sam/subDir.png"))),
+            Assert.Contains(outCss, "/yui/ver/build/module/assets/skins/sam/subDir.png",
                 "fixed subdir path not found");
-            mockResponse.Verify(m => m.Write(
-                It.Is<string>(s => s.Contains("/yui/ver/build/module/dir.png"))),
+            Assert.Contains(outCss, "/yui/ver/build/module/dir.png",
                 "fixed file path not found");
-            mockResponse.Verify(m => m.Write(
-                It.Is<string>(s => s.Contains("src='/yui/ver/build/module/../Images/alpha.png'"))),
+            Assert.Contains(outCss, "src='/yui/ver/build/module/../Images/alpha.png'",
                 "fixed alpha path not found");                
         }
 

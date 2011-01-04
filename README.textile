@@ -63,3 +63,4 @@ h2. Todo
 * smarter css path fixing to save a few extra bytes.
 * think about versioning for custom modules. How to manage with more granularity?
 * Add example of non-YUI usage to the example project.
+* Wrap cacheing code in its own provider to facilitate unit-tests and extensibility.
