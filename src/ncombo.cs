@@ -32,10 +32,13 @@ namespace NCombo
             //
             // Make sure the cache directory exists
             //
-            string absCachePath = context.Server.MapPath(cacheDir);
-            if (!Directory.Exists(absCachePath))
+            if (context != null)
             {
-                Directory.CreateDirectory(absCachePath);
+                string absCachePath = context.Server.MapPath(cacheDir);
+                if (!Directory.Exists(absCachePath))
+                {
+                    Directory.CreateDirectory(absCachePath);
+                }
             }
         }
 
