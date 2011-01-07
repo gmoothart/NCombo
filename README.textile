@@ -27,7 +27,7 @@ NCombo is an asp.net http handler. In order to use it, you must register it in y
 
 If you use the NCombo default settings, this is all you need to do.
 
-All files served by NCombo must be in a common root directory. The default is ~/yui/, but this can be customized with the "yuiDir" configuration setting. Similarly, the cacheing directory is ~/yui/cache/ by default, but can be customized.
+All files served by NCombo must be in a common root directory. The default is ~/yui/, but this can be customized with the "baseDir" configuration setting. Similarly, the cacheing directory is ~/yui/cache/ by default, but can be customized.
 
 <pre><code>
   <configSections>
