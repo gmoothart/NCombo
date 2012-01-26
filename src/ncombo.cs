@@ -16,7 +16,7 @@ namespace NCombo
     {
         string baseDir;
         string cacheDir;
-        Regex cssRelativeUrl = new Regex(@"(url\()(?!(http|data))(\S+)(\))");
+        Regex cssRelativeUrl = new Regex(@"(url\()(?!(http|data))(\S+?)(\))");
         Regex cssAlphaImageUrl = new Regex(@"AlphaImageLoader\(src=['""](.*?)['""]");
 
         protected override void Init(HttpContextBase context)

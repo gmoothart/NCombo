@@ -171,6 +171,18 @@ namespace NComboTest
         }
 
         [Test]
+        public void Handler_FixesSubdirCssPathsCorrectly()
+        {
+            string root = "/root/";
+            string css = @".{background-image:url(Images/img.png);_background-image:url(Images/img.gif);}";
+
+            string outCss = handler.fixupCss(root, css);
+              
+            Assert.Contains(outCss, "/root/Images/img.png");
+            Assert.Contains(outCss, "/root/Images/img.gif");
+        }
+
+        [Test]
         public void Handler_DoesNotTryToFixDataUris()
         {
             string css = 
