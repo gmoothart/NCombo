@@ -19,6 +19,18 @@ namespace NCombo
         Regex cssRelativeUrl = new Regex(@"(url\()(?!(http|data))(\S+?)(\))");
         Regex cssAlphaImageUrl = new Regex(@"AlphaImageLoader\(src=['""](.*?)['""]");
 
+        /// <summary>
+        /// Whitelist of path patterns to serve
+        /// </summary>
+        /// <remarks>
+        /// By default, only *.js and *.css are allowed.
+        /// TODO: make this configurable
+        /// </remarks>
+        List<Regex> pathWhitelist = new List<Regex> {
+            new Regex(@"\.js$"),
+            new Regex(@"\.css$"),
+        };
+
         protected override void Init(HttpContextBase context)
         {
             //
@@ -44,16 +56,34 @@ namespace NCombo
 
         public override void HandleRequest(HttpContextBase context)
         {
+            string allowedRoot = context.Server.MapPath(baseDir);
             string q = context.Request.Url.Query.Substring(1);
-            var paths = from path in q.Split('&')
-                        where !string.IsNullOrEmpty(path)
-                        select VirtualPathUtility.ToAbsolute(baseDir + path, context.Request.ApplicationPath);
+
+            //
+            // convert app-relative paths to file paths
+            // dis-allow any paths outside the root and any not matching
+            // a whitelist, for security
+            //
+            var paths = from relPath in q.Split('&')
+                        let virtualPath = VirtualPathUtility.ToAbsolute(baseDir + relPath, context.Request.ApplicationPath) 
+                        let filePath = context.Server.MapPath(virtualPath)
+                        where !string.IsNullOrEmpty(relPath)
+                           && filePath.StartsWith(allowedRoot)
+                           && allowedByWhitelist(relPath)
+                        select new{ filePath, virtualPath };
             
+            //
+            // nothing to do
+            //
+            if (!paths.Any()) {
+                RespondFileNotFound(context);
+                return;
+            }
 
             //
             // Set mime type and compression header
             //
-            bool isCSS = pathIsCSS(paths.First());
+            bool isCSS = pathIsCSS(paths.First().filePath);
             if (isCSS)
             {
                 context.Response.ContentType = "text/css";
@@ -85,18 +115,17 @@ namespace NCombo
                 using(StreamWriter sw = new StreamWriter(plainCacheFilename))
                 {
                     // create combo file by concatenating files together
-                    foreach (string virtualPath in paths)
+                    foreach (var p in paths)
                     {
-                        string filePath = context.Server.MapPath(virtualPath);
-                        if (!File.Exists(filePath))
+                        if (!File.Exists(p.filePath))
                         {
                             RespondFileNotFound(context);
                         }
-                        string scriptContent = File.ReadAllText(filePath);
+                        string scriptContent = File.ReadAllText(p.filePath);
 
                         if (isCSS)
                         {
-                            scriptContent = fixupCss(virtualPath, scriptContent);
+                            scriptContent = fixupCss(p.virtualPath, scriptContent);
                         }
 
                         sw.WriteLine(scriptContent);
@@ -115,6 +144,11 @@ namespace NCombo
                 string fn = canGzip ? gzipCacheFilename : plainCacheFilename;
                 context.Response.WriteFile(fn);
             }
+        }
+
+        private bool allowedByWhitelist(string relPath)
+        {
+            return pathWhitelist.Any(re => re.IsMatch(relPath));
         }
 
         /// <summary>

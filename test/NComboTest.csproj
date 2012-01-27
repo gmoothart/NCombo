@@ -74,15 +74,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="testScripts\test4.js" />
-    <Content Include="testScripts\test5.js" />
-    <Content Include="testScripts\test3.js" />
-    <Content Include="testScripts\test2.js" />
-    <Content Include="testScripts\test1.js" />
-    <Content Include="testStylesheets\relPaths.css" />
+    <Content Include="test\scripts\test4.js" />
+    <Content Include="test\scripts\test5.js" />
+    <Content Include="test\scripts\test3.js" />
+    <Content Include="test\scripts\test2.js" />
+    <Content Include="test\scripts\test1.js" />
+    <Content Include="test\styles\relPaths.css" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <None Include="packages.config" />
+    <None Include="test\web.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

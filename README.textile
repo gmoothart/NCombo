@@ -3,6 +3,9 @@ h1. NCombo
 
 An http resource combo-loader, for requesting multiple .css or .js files in a single request. Files are cached and gzipped. Tuned and primarily intended for use with YUI 3, but could be useful in any scenarion where you want to minimize http traffic by combining text resources. 
 
+For security it will only serve files within a specified base directory ("~/yui/" by default), and it will only serve files whose names match a whitelist (*.js and *.css currently)
+
+
 h2. How to Use
 
 NCombo is an asp.net http handler. In order to use it, you must register it in your web.config:
@@ -63,3 +66,4 @@ h2. Todo
 * smarter css path fixing to save a few extra bytes.
 * think about versioning for custom modules. How to manage with more granularity?
 * Add example of non-YUI usage to the example project.
+* Make whitelist configurable

@@ -44,6 +44,8 @@ namespace NComboTest
             mockServer = new Mock<HttpServerUtilityBase>();
             mockServer.Setup(m => m.MapPath(It.Is<string>(s => s.StartsWith("~/yui/cache/"))))
                       .Returns<string>(s => @"..\..\cacheDir\" + Path.GetFileName(s));
+            mockServer.Setup(m => m.MapPath("~/yui/"))
+                      .Returns(@"..\..\test\");
 
             // set up cache dir
             if (!Directory.Exists(@"..\..\cacheDir"))
@@ -87,7 +89,33 @@ namespace NComboTest
             mockRequest.Setup(m => m.Url)
                        .Returns(new Uri("http://app/ncombo.axd?file/not/found.js"));
             mockServer.Setup(m => m.MapPath("/yui/file/not/found.js"))
-                      .Returns(@"..\..\testScripts\test0.js");
+                      .Returns(@"..\..\test\scripts\test0.js");
+
+            handle();
+
+            mockResponse.VerifySet(m => m.StatusCode = 404);
+        }
+
+        [Test]
+        public void Handler_DoesNotAllow_FilesNotInWhitelist()
+        {
+            mockRequest.Setup(m => m.Url)
+                       .Returns(new Uri("http://app/ncombo.axd?/web.config"));
+            mockServer.Setup(m => m.MapPath("/yui/web.config"))
+                      .Returns(@"..\..\test\web.config");
+
+            handle();
+
+            mockResponse.VerifySet(m => m.StatusCode = 404);
+        }
+
+        [Test]
+        public void Handler_DoesNotAllow_RequestsOutisdeRootDir()
+        {
+            mockRequest.Setup(m => m.Url)
+                       .Returns(new Uri("http://app/ncombo.axd?folder/../../packages.config"));
+            mockServer.Setup(m => m.MapPath("/packages.config"))
+                      .Returns(@"..\..\packages.config");
 
             handle();
 
@@ -100,9 +128,9 @@ namespace NComboTest
             mockRequest.Setup(m => m.Url)
                        .Returns(new Uri("http://app/ncombo.axd?file/test1.js&file/test2.js&"));
             mockServer.Setup(m => m.MapPath("/yui/file/test1.js"))
-                      .Returns(@"..\..\testScripts\test1.js");
+                      .Returns(@"..\..\test\scripts\test1.js");
             mockServer.Setup(m => m.MapPath("/yui/file/test2.js"))
-                      .Returns(@"..\..\testScripts\test2.js");
+                      .Returns(@"..\..\test\scripts\test2.js");
 
             handle();
 
@@ -116,7 +144,9 @@ namespace NComboTest
             mockRequest.Setup(m => m.Url)
                        .Returns(new Uri("http://app/ncombo.axd?file/test1.js&file/test2.js&"));
             mockServer.Setup(m => m.MapPath("/yui/file/test1.js"))
-                      .Returns(@"..\..\testScripts\test1.js");
+                      .Returns(@"..\..\test\scripts\test1.js");
+            mockServer.Setup(m => m.MapPath("/yui/file/test2.js"))
+                      .Returns(@"..\..\test\scripts\test2.js");
             
 
             handle();
@@ -130,7 +160,7 @@ namespace NComboTest
             mockRequest.Setup(m => m.Url)
                        .Returns(new Uri("http://app/ncombo.axd?file/test1.css&file/test2.css"));
             mockServer.Setup(m => m.MapPath("/yui/file/test1.css"))
-                      .Returns(@"..\..\testScripts\test1.css");
+                      .Returns(@"..\..\test\scripts\test1.css");
 
             handle();
             
@@ -149,7 +179,7 @@ namespace NComboTest
             mockRequest.Setup(m => m.Url)
                        .Returns(new Uri("http://app/ncombo.axd?ver/build/module/relPaths.css"));
             mockServer.Setup(m => m.MapPath("/yui/ver/build/module/relPaths.css"))
-                      .Returns(@"..\..\testStylesheets\relPaths.css");
+                      .Returns(@"..\..\test\styles\relPaths.css");
 
             string outCss = "";
             mockResponse.Setup(m => m.WriteFile(It.IsAny<string>()))
